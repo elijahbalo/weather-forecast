@@ -1,0 +1,28 @@
+.line-chart {
+    height:200px;
+    width:100%;
+    // @include size(500px, 100%);
+  }
+  .line-chart > h2 {
+    margin-left: 2%;
+    margin-top: 2%;
+  }
+  
+  ::ng-deep {
+    .center{
+      .highcharts-container {
+        margin: 50% auto !important;
+        transform:translateY(-50%);
+      }
+    }
+      .column-center {
+        .highcharts-container {
+          margin: 50% auto !important;
+          transform:translateY(-50%);
+        //   @include respond-x-small {
+        //     margin: auto !important;
+        //     transform:translateY(0);
+        //   }
+        }
+      }
+    }
