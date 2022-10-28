@@ -235,7 +235,7 @@ export class AppComponent {
     info.data.forEach(item => {
       data.push(item.temp);
     })
-    this.currentTempChartData = data;
+    this.currentTempChartData = this.sanitizeOffsetData(data);
     this.currentTempChartDate = this.currentDayInfo.date;
     this.statsTitle = "Temperature Stats";
     this.calculateDataAndStats(data);
@@ -248,7 +248,7 @@ export class AppComponent {
     info.data.forEach(item => {
       data.push(item.humidity)
     })
-    this.currentHumidChartData = data;
+    this.currentHumidChartData = this.sanitizeOffsetData(data);
     this.currentHumidChartDate = this.currentDayInfo.date;
     this.statsTitle = "Humidity Stats";
     this.calculateDataAndStats(data);
@@ -300,19 +300,19 @@ export class AppComponent {
 
   getMorningValues(data: number[]) {
     let statData = this.sanitizeOffsetData(data);
-    let res = this.getMeanValue([...statData.slice(0, 5)]);
+    let res = this.getMeanValue([...statData.slice(0, 4)]);
     return (res == 0)?"No Data":res;
   }
 
   getAfternoonValues(data: number[]) {
     let statData = this.sanitizeOffsetData(data);
-    let res = this.getMeanValue([...statData.slice(5, 7)]);
+    let res = this.getMeanValue([...statData.slice(4, 6)]);
     return (res == 0)?"No Data":res;
   }
 
   getNightValues(data: number[]) {
     let statData = this.sanitizeOffsetData(data);
-    let res = this.getMeanValue([...statData.slice(7, 9)]);
+    let res = this.getMeanValue([...statData.slice(6, 8)]);
     return (res == 0)?"No Data":res;
   }
 
