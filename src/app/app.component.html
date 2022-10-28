@@ -48,7 +48,7 @@
             </ul>
           </div>
 
-          <mat-tab-group (selectedTabChange)="getChartInformation($event.index)" class="line-chart-cover">
+          <mat-tab-group [(selectedIndex)]="selectedIndex" (selectedTabChange)="getChartInformation($event.index)" class="line-chart-cover">
             <mat-tab label="Temperature">
               <div class="line-chart">
                 <div class="line-chart-container" *ngIf="tempChartLoaded">

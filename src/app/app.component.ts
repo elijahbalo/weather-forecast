@@ -20,6 +20,7 @@ export class AppComponent {
   @ViewChild(GoogleMap, { static: false }) map: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) infoWindow: MapInfoWindow;
   currentDayId = 0;
+  selectedIndex = 0;
   statsTitle: string;
   weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   tempTitle = "Temperature";
@@ -220,16 +221,21 @@ export class AppComponent {
   getDailyInformation($event) {
     this.currentDayId = $event;
     this.currentDayInfo = this.weatherDataMap.get(this.weatherDays[$event]);
+    this.selectedIndex = 0;
     this.getChartInformation(0);
   }
 
   getChartInformation($event) {
-    ($event == 0) ? this.loadTemperatureChart(this.currentDayInfo) : this.loadHumidityChart(this.currentDayInfo);
+    console.log("event triggered",event)
+    if($event == 0) {
+      this.loadTemperatureChart(this.currentDayInfo);
+    }else{this.loadHumidityChart(this.currentDayInfo);
+    }
     this.cd.detectChanges();
   }
 
   loadTemperatureChart(info: DailyWeatherInfo) {
-    this.tempChartLoaded = false;  // load temperature by default
+    this.resetChartLoad();
     setTimeout(() => { this.tempChartLoaded = true; }, 500);
     let data = [];
     info.data.forEach(item => {
@@ -237,12 +243,13 @@ export class AppComponent {
     })
     this.currentTempChartData = this.sanitizeOffsetData(data);
     this.currentTempChartDate = this.currentDayInfo.date;
+    console.log('changing stats title')
     this.statsTitle = "Temperature Stats";
     this.calculateDataAndStats(data);
   }
 
   loadHumidityChart(info: DailyWeatherInfo) {
-    this.humidChartLoaded = false;
+    this.resetChartLoad();
     setTimeout(() => { this.humidChartLoaded = true; }, 500); //allowChartLoad
     let data = [];
     info.data.forEach(item => {
@@ -254,6 +261,10 @@ export class AppComponent {
     this.calculateDataAndStats(data);
   }
 
+  resetChartLoad() {
+    this.humidChartLoaded = false;
+    this.tempChartLoaded = false;
+  }
   calculateDataAndStats(data: number[]) {
     this.weatherStats = {
       mean: this.getMeanValue(data),
