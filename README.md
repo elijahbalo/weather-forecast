@@ -2,6 +2,7 @@
 
 ## running program
 
-Install dependencies `npm install` that app uses and run `npm start` to run dev server. 
+
+Install app dependencies using `npm install` and run `npm start` to run dev server. 
 
 
