@@ -1,4 +1,4 @@
-# weather-forecas
+# weather-forecast
 
 ## running program
 
