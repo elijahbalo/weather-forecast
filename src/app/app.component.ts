@@ -226,7 +226,6 @@ export class AppComponent {
   }
 
   getChartInformation($event) {
-    console.log("event triggered",event)
     if($event == 0) {
       this.loadTemperatureChart(this.currentDayInfo);
     }else{this.loadHumidityChart(this.currentDayInfo);
@@ -243,7 +242,6 @@ export class AppComponent {
     })
     this.currentTempChartData = this.sanitizeOffsetData(data);
     this.currentTempChartDate = this.currentDayInfo.date;
-    console.log('changing stats title')
     this.statsTitle = "Temperature Stats";
     this.calculateDataAndStats(data);
   }
