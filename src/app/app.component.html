@@ -1,0 +1,75 @@
+<div class="body">
+  <div class="vid-background">
+    <video autoplay muted loop class="">
+      <source src="assets/video.mp4" type="video/mp4">
+    </video>
+  </div>
+  <mat-card class="maps-container">
+    <div class="maps-container__header">
+      <mat-form-field class="maps-container__header--input" appearance="fill">
+        <mat-label>Enter forecast address</mat-label>
+        <input matInput type="text" [(ngModel)]="address" (keydown.enter)="findAddress()">
+        <button *ngIf="address" matSuffix mat-icon-button aria-label="Clear" (click)="address=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <div class="maps-container__header--buttons">
+        <button mat-flat-button color="primary" (click)="findAddress()">Find Location</button>
+        <button mat-flat-button color="accent" (click)="getCurrentLocation()">Use Current Location</button>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card class="google-map">
+    <google-map [zoom]="mapZoom" [center]="mapCenter" [options]="mapOptions" style="height:200px;width:300px;">
+      <map-marker #marker="mapMarker" [position]="mapCenter" [options]="markerOptions"
+        (mapClick)="openInfoWindow(marker)" (mapDragend)="onMapDragEnd($event)">
+      </map-marker>
+      <map-info-window>{{ markerInfoContent }}</map-info-window>
+    </google-map>
+  </mat-card>
+
+  <h1 *ngIf="address" class="desc">5 day weather forecast for <strong>{{address}}</strong></h1>
+  <mat-card class="weather-container">
+    <mat-tab-group (selectedTabChange)="getDailyInformation($event.index)" *ngIf="weatherDataLoaded">
+      <mat-tab *ngFor="let day of weatherDays" [label]="day">
+        <div class="line-chart">
+          <p class="stats-paragraph">{{statsTitle}}:</p>
+          <div class="stats">
+            <ul *ngIf="weatherGroup">
+              <li>Morning &nbsp;<strong>({{weatherGroup.morning}}<sup *ngIf="statsTitle === 'Temperature Stats' && weatherGroup.morning !== 'No Data'">o</sup> )</strong> </li>
+              <li>Afternoon &nbsp;<strong>({{weatherGroup.day}}<sup *ngIf="statsTitle === 'Temperature Stats' && weatherGroup.day !== 'No Data'">o</sup>)</strong> </li>
+              <li>Night &nbsp;<strong>({{weatherGroup.night}}<sup *ngIf="statsTitle === 'Temperature Stats' && weatherGroup.night !== 'No Data'">o</sup>)</strong> </li>
+            </ul>
+            <ul *ngIf="weatherStats">
+              <li>Minimum &nbsp;<strong>({{weatherStats.min}}<sup *ngIf="statsTitle === 'Temperature Stats'">o</sup> )</strong> </li>
+              <li>Maximum &nbsp;<strong>({{weatherStats.max}}<sup *ngIf="statsTitle === 'Temperature Stats'">o</sup>)</strong> </li>
+              <li>Mean &nbsp;<strong>({{weatherStats.mean}}<sup *ngIf="statsTitle === 'Temperature Stats'">o</sup>)</strong> </li>
+              <li>Mode &nbsp;<strong>({{weatherStats.max}}<sup *ngIf="statsTitle === 'Temperature Stats'">o</sup>)</strong> </li>
+            </ul>
+          </div>
+
+          <mat-tab-group (selectedTabChange)="getChartInformation($event.index)" class="line-chart-cover">
+            <mat-tab label="Temperature">
+              <div class="line-chart">
+                <div class="line-chart-container" *ngIf="tempChartLoaded">
+                  <app-line-chart [title]="tempTitle" [chartData]="currentTempChartData"
+                    [currentChartDate]="currentTempChartDate"></app-line-chart>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Humidty">
+              <div class="line-chart">
+                <div class="line-chart-container" *ngIf="humidChartLoaded">
+                  <app-line-chart [title]="humidTitle" [chartData]="currentHumidChartData"
+                    [currentChartDate]="currentHumidChartDate"></app-line-chart>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+
+
+</div>
