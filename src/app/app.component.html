@@ -36,15 +36,15 @@
           <p class="stats-paragraph">{{statsTitle}}:</p>
           <div class="stats">
             <ul *ngIf="weatherGroup">
-              <li>Morning &nbsp;<strong>({{weatherGroup.morning}}<sup>o</sup> )</strong> </li>
-              <li>Afternoon &nbsp;<strong>({{weatherGroup.day}}<sup>o</sup>)</strong> </li>
-              <li>Night &nbsp;<strong>({{weatherGroup.night}}<sup>o</sup>)</strong> </li>
+              <li>Morning &nbsp;<strong>({{weatherGroup.morning}}<sup *ngIf="statsTitle === 'Temperature Stats' && weatherGroup.morning !== 'No Data'">o</sup> )</strong> </li>
+              <li>Afternoon &nbsp;<strong>({{weatherGroup.day}}<sup *ngIf="statsTitle === 'Temperature Stats' && weatherGroup.day !== 'No Data'">o</sup>)</strong> </li>
+              <li>Night &nbsp;<strong>({{weatherGroup.night}}<sup *ngIf="statsTitle === 'Temperature Stats' && weatherGroup.night !== 'No Data'">o</sup>)</strong> </li>
             </ul>
             <ul *ngIf="weatherStats">
-              <li>Minimum &nbsp;<strong>({{weatherStats.min}}<sup>o</sup> )</strong> </li>
-              <li>Maximum &nbsp;<strong>({{weatherStats.max}}<sup>o</sup>)</strong> </li>
-              <li>Mean &nbsp;<strong>({{weatherStats.mean}}<sup>o</sup>)</strong> </li>
-              <li>Mode &nbsp;<strong>({{weatherStats.max}}<sup>o</sup>)</strong> </li>
+              <li>Minimum &nbsp;<strong>({{weatherStats.min}}<sup *ngIf="statsTitle === 'Temperature Stats'">o</sup> )</strong> </li>
+              <li>Maximum &nbsp;<strong>({{weatherStats.max}}<sup *ngIf="statsTitle === 'Temperature Stats'">o</sup>)</strong> </li>
+              <li>Mean &nbsp;<strong>({{weatherStats.mean}}<sup *ngIf="statsTitle === 'Temperature Stats'">o</sup>)</strong> </li>
+              <li>Mode &nbsp;<strong>({{weatherStats.max}}<sup *ngIf="statsTitle === 'Temperature Stats'">o</sup>)</strong> </li>
             </ul>
           </div>
 
